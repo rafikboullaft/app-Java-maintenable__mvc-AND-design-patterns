@@ -17,5 +17,9 @@ public class Player {
 	public PlayingCard returnCard() {
 		return hand.returntheCard();
 	}
+	public String getName() {
+		return name;
+	}
+	
 
 }

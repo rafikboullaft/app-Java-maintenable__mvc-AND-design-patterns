@@ -23,6 +23,10 @@ public class PlayingCard {
 	public suit getSuit() {
 		return suit;
 	}
+	public void flip() {
+		faceUp = true;
+		
+	}
 	
 
 }

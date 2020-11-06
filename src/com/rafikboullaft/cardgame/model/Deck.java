@@ -8,10 +8,12 @@ import java.util.Random;
 public class Deck {
 	ArrayList<PlayingCard> cards;
 	public Deck() {
+		cards = new ArrayList<PlayingCard>();
 		for (Rank rank:Rank.values()) {
-			for (suit suit:suit.values()) {
-				cards.add(new PlayingCard(rank,suit));
-				System.out.print("card :("+rank+","+suit+")");
+			for (suit suit1:suit.values()) {
+				PlayingCard pc=new PlayingCard(rank,suit1);
+				cards.add(pc);
+				System.out.println("card :("+rank+","+suit1+") created..");
 			}
 		}
 		shuffle();

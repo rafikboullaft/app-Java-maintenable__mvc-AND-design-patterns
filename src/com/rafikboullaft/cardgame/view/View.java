@@ -1,39 +1,50 @@
 package com.rafikboullaft.cardgame.view;
 
+import java.util.Scanner;
+
 import com.rafikboullaft.cardgame.controller.GameController;
 import com.rafikboullaft.cardgame.model.Rank;
 import com.rafikboullaft.cardgame.model.suit;
 
 public class View {
-	public void setController(GameController gc) {}
-	public void somthing() {}
+	GameController controller;
+	Scanner keyboard = new Scanner(System.in);
+	
+	public void setController(GameController gc) {
+		this.controller=gc;
+	}
 	public void promptForPlayerName() {
-		// TODO Auto-generated method stub
+		System.out.println("Enter Player Name: ");
+		String name=keyboard.nextLine();
+		if(name.isEmpty()) {
+			controller.startGame();
+		}else {
+			controller.addPlayer(name);
+		}
 		
 	}
 	public void promptForFlip() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("ENTER to REVEAL cards");
+		keyboard.nextLine();
+		controller.flipCards();
 	}
 	public void promptForNewGame() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("ENTER to START again");
+		keyboard.nextLine();
+		controller.startGame();
 	}
 	public void showPlayerName(int size, String playername) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("["+size+"]["+playername+"]");
 	}
-	public void showFaceDownForPlayer(int i, String name) {
-		// TODO Auto-generated method stub
-		
+	public void showFaceDownForPlayer(int index, String playername) {
+		System.out.println("["+index+"]["+playername+"][####][#####]");
 	}
-	public void showCardforPlayer(int i, String name, Rank rank, suit suit) {
-		// TODO Auto-generated method stub
-		
+	public void showCardforPlayer(int index, String playername, Rank rank, suit suit) {
+		System.out.println("["+index+"]["+playername+"]["+rank+"]["+suit+"]");
 	}
 	public void showWinner(String name) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("the winner ====================>"+name);
+		System.out.println("hard luck to others ;) ");
 	}
 
 }

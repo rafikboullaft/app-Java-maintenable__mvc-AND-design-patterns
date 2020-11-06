@@ -1,8 +1,8 @@
 package com.rafikboullaft.cardgame.model;
 
 public class Player {
-	private String name;
-	private Hand hand;
+	String name;
+	Hand hand;
 	public Player(String name) {
 		super();
 		this.name = name;

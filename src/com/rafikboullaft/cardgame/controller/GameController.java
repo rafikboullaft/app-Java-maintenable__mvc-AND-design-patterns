@@ -62,6 +62,8 @@ public class GameController {
 				player.addCard(deck.rempveTopCard());
 				view.showFaceDownForPlayer(playerIndex++,player.getName());
 			}
+			gameState=GameState.CardsDealt;
+			
 		}
 	}
 	public void flipCards() {

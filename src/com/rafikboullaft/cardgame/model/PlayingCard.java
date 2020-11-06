@@ -1,12 +1,11 @@
 package com.rafikboullaft.cardgame.model;
 
 public class PlayingCard {
-	private Rank rank;
-	private suit suit;
-	private boolean faceUp;
+	 Rank rank;
+	 suit suit;
+	 boolean faceUp;
 	
 	public PlayingCard(Rank rank, suit suit) {
-		super();
 		this.rank = rank;
 		this.suit = suit;
 		this.faceUp = false;
@@ -23,8 +22,9 @@ public class PlayingCard {
 	public suit getSuit() {
 		return suit;
 	}
-	public void flip() {
-		faceUp = true;
+	public boolean flip() {
+		faceUp = !faceUp;
+		return faceUp;
 		
 	}
 	

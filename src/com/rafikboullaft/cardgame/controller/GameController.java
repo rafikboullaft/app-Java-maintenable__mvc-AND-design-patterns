@@ -2,6 +2,7 @@ package com.rafikboullaft.cardgame.controller;
 
 import java.util.ArrayList;
 
+import com.rafikboullaft.cardgame.allgames.GameEvaluator;
 import com.rafikboullaft.cardgame.model.Deck;
 import com.rafikboullaft.cardgame.model.Player;
 import com.rafikboullaft.cardgame.model.PlayingCard;
@@ -22,14 +23,15 @@ public class GameController {
 	ArrayList<Player> players;
 	Player winner;
 	GameState gameState;
-	
-	public GameController(Deck deck, View view) {
+	GameEvaluator gameEvaluator;
+	public GameController(Deck deck, View view,GameEvaluator gameEvaluator) {
 		super();
 		this.deck = deck;
 		this.view = view;
 		players = new ArrayList<Player>();
 		view.setController(this);
 		this.gameState= GameState.AddingPlayers;
+		this.gameEvaluator=gameEvaluator;
 	}
 	public void run() {
 		while(true) {
@@ -81,45 +83,12 @@ public class GameController {
 		
 	}
 	
-	private void evaluateWinner() {
-		Player bestPlayer=null;
-		int bestRank = -1;
-		int bestSuit = -1;
-		
-		for(Player player:players) {
-			boolean newBestPlayer=false;
-			if(bestPlayer==null) {
-				newBestPlayer=true;
-			}
-			else {
-			PlayingCard pl=player.getCard(0);
-			int currentRank = pl.getRank().value();
-			if (currentRank >= bestRank) {
-				if(currentRank>bestRank) {
-					newBestPlayer=true;
-				}
-				else {
-					if(pl.getSuit().value()>bestSuit) {
-						newBestPlayer=true;
-					}
-				}
-			}
-			}
-			if(newBestPlayer) {
-				bestPlayer=player;
-				bestRank=player.getCard(0).getRank().value();
-				bestSuit=player.getCard(0).getSuit().value();
-			}
-			
-			
-		}
-		winner = bestPlayer;
-		
-		
+	private void evaluateWinner() {	
+		winner =gameEvaluator.evaluateWinner(players);
+	
 	}
 	private void displaywinner() {
-		view.showWinner(winner.getName());
-		
+		view.showWinner(winner.getName());	
 	}
 	private void rebuildDeck() {
 		for(Player player:players) {

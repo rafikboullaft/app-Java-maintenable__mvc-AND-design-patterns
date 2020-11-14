@@ -3,47 +3,67 @@ package com.rafikboullaft.cardgame.controller;
 import java.util.ArrayList;
 
 import com.rafikboullaft.cardgame.allgames.GameEvaluator;
+import com.rafikboullaft.cardgame.allgames.HighCardGameEvaluator;
+import com.rafikboullaft.cardgame.allgames.LowCardGameEvaluator;
 import com.rafikboullaft.cardgame.model.Deck;
 import com.rafikboullaft.cardgame.model.IPlayer;
 import com.rafikboullaft.cardgame.model.Player;
 import com.rafikboullaft.cardgame.model.PlayingCard;
 import com.rafikboullaft.cardgame.model.WinnerPlayer;
 import com.rafikboullaft.cardgame.view.GameView;
+import com.rafikboullaft.cardgame.view.GameViewables;
 
 
 public class GameController {
 	enum GameState{
 		AddingPlayers,
 		CardsDealt,
-		WinnerRevealed
-		
+		WinnerRevealed,
+		AddingView	
 	}
 	Deck deck;
-	GameView view;
+	GameViewables views;
 	ArrayList<IPlayer> players;
 	IPlayer winner;
 	GameState gameState;
 	GameEvaluator gameEvaluator;
 	public GameController(Deck deck, GameView view,GameEvaluator gameEvaluator) {
 		super();
+		views = new GameViewables();
 		this.deck = deck;
-		this.view =view;
-		players = new ArrayList<IPlayer>();
-		view.setController(this);
-		this.gameState= GameState.AddingPlayers;
 		this.gameEvaluator=gameEvaluator;
+		this.gameEvaluator=new LowCardGameEvaluator();// you can change it to highCardGmeEvaluator;
+		players = new ArrayList<IPlayer>();
+		this.gameState= GameState.AddingPlayers;
+		addViewable(view);
+			
+	}
+	public void addViewable(GameView newView) {
+		GameState curState=gameState;
+		gameState = GameState.AddingView;
+		newView.setController(this);
+		views.addGameView(newView);
+		try {
+			Thread.sleep(1000);
+		}catch(InterruptedException e){
+			e.printStackTrace();
+		}
+		gameState =curState;
+		
 	}
 	public void run() {
 		while(true) {
 			switch(gameState) {
 				case AddingPlayers:
-					view.promptForPlayerName();
+					views.promptForPlayerName();
 					break;
 				case CardsDealt:
-					view.promptForFlip();
+					views.promptForFlip();
 					break;
 				case WinnerRevealed:
-					view.promptForNewGame();
+					views.promptForNewGame();
+					break;
+				case AddingView:
 					break;
 					
 			}
@@ -52,7 +72,7 @@ public class GameController {
 	public void addPlayer(String playername) {
 		if(gameState==GameState.AddingPlayers) {
 			players.add(new Player(playername));
-			view.showPlayerName(players.size(),playername);
+			views.showPlayerName(players.size(),playername);
 			
 		}
 	}
@@ -62,7 +82,7 @@ public class GameController {
 			int playerIndex=1;
 			for(IPlayer player:players) {
 				player.addCard(deck.rempveTopCard());
-				view.showFaceDownForPlayer(playerIndex++,player.getName());
+				views.showFaceDownForPlayer(playerIndex++,player.getName());
 			}
 			gameState=GameState.CardsDealt;
 			
@@ -77,7 +97,7 @@ public class GameController {
 		for (IPlayer player:players) {
 				PlayingCard card= player.getCard(0);
 				card.flip();
-				view.showCardforPlayer(playerIndex++,
+				views.showCardforPlayer(playerIndex++,
 						player.getName(),card.getRank(),card.getSuit());
 			}
 		evaluateWinner();
@@ -92,7 +112,7 @@ public class GameController {
 	
 	}
 	private void displaywinner() {
-		view.showWinner(winner.getName());	
+		views.showWinner(winner.getName());	
 	}
 	private void rebuildDeck() {
 		for(IPlayer player:players) {

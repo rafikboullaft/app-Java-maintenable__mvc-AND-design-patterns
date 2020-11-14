@@ -1,17 +1,15 @@
 package com.rafikboullaft.cardgame.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Vector;
 import com.rafikboullaft.cardgame.controller.GameController;
 import com.rafikboullaft.cardgame.model.Rank;
 import com.rafikboullaft.cardgame.model.suit;
 
 public class GameViewables implements GameView {
 
-	List<GameView> views;
+	Vector<GameView> views;
 	public GameViewables() {
-		views= new ArrayList<GameView>();
+		views= new Vector<GameView>();
 	}
 	public void addGameView(GameView gameView) {
 		views.add(gameView);

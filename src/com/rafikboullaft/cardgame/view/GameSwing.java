@@ -25,7 +25,7 @@ public class GameSwing implements GameView {
     JButton btnDealCards;
     JButton btnFindWinner;
     JTextArea textArea;
-    char nextPlayerName = 'A';
+    static char nextPlayerName = 'A';
 
     public void createAndShowGUI() {
 
@@ -37,17 +37,39 @@ public class GameSwing implements GameView {
         // tous les contrôles vont apparaitre verticalement
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        
         addAddPlayerButton(contentPane);
         addDealCardsButton(contentPane);
         addFindWinnerButton(contentPane);
+        addNewWindow(contentPane);
+        
         addControllerCommandTracker(contentPane);
 
         frame.setVisible(true);
 
     }
+    
+    private void addNewWindow(Container contentPane) {
+    	JButton btnAddWindow = new JButton("New Window");
+    	addCenteredComponent (btnAddWindow, contentPane);
+
+    	btnAddWindow.addActionListener(new ActionListener() {
+    	    
+    	    public void actionPerformed(ActionEvent e) {
+    	        GameSwing game = new GameSwing();
+    	        
+    	        game.createAndShowGUI();
+    	        
+    	        controller.addViewable(game);
+    	    }
+    	    
+    	});
+		
+	}
 
 
-    // au click, dire au contrôleur d'ajouter un joueur avec le nom donné
+
+	// au click, dire au contrôleur d'ajouter un joueur avec le nom donné
     // ceci DEVRAIT afficher une fenêtre de dialogue pour autoriser l'utilisateur à entrer un nom
     // mais c'est hors du champs de ce qu'on doit apprendre ici
     // pour plus de simplicité, nous allons seulement lui demander d'ajouter "Player A", "Player B", etc.

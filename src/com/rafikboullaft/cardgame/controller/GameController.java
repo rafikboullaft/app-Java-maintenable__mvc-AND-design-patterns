@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import com.rafikboullaft.cardgame.allgames.GameEvaluator;
 import com.rafikboullaft.cardgame.model.Deck;
+import com.rafikboullaft.cardgame.model.IPlayer;
 import com.rafikboullaft.cardgame.model.Player;
 import com.rafikboullaft.cardgame.model.PlayingCard;
+import com.rafikboullaft.cardgame.model.WinnerPlayer;
 import com.rafikboullaft.cardgame.view.GameView;
 
 
@@ -18,15 +20,15 @@ public class GameController {
 	}
 	Deck deck;
 	GameView view;
-	ArrayList<Player> players;
-	Player winner;
+	ArrayList<IPlayer> players;
+	IPlayer winner;
 	GameState gameState;
 	GameEvaluator gameEvaluator;
 	public GameController(Deck deck, GameView view,GameEvaluator gameEvaluator) {
 		super();
 		this.deck = deck;
 		this.view =view;
-		players = new ArrayList<Player>();
+		players = new ArrayList<IPlayer>();
 		view.setController(this);
 		this.gameState= GameState.AddingPlayers;
 		this.gameEvaluator=gameEvaluator;
@@ -58,7 +60,7 @@ public class GameController {
 		if(gameState != GameState.CardsDealt) {
 			deck.shuffle();
 			int playerIndex=1;
-			for(Player player:players) {
+			for(IPlayer player:players) {
 				player.addCard(deck.rempveTopCard());
 				view.showFaceDownForPlayer(playerIndex++,player.getName());
 			}
@@ -72,7 +74,7 @@ public class GameController {
 	}
 	public void flipCards() {
 		int playerIndex=1;
-		for (Player player:players) {
+		for (IPlayer player:players) {
 				PlayingCard card= player.getCard(0);
 				card.flip();
 				view.showCardforPlayer(playerIndex++,
@@ -86,14 +88,14 @@ public class GameController {
 	}
 	
 	private void evaluateWinner() {	
-		winner =gameEvaluator.evaluateWinner(players);
+		winner = new WinnerPlayer(gameEvaluator.evaluateWinner(players));
 	
 	}
 	private void displaywinner() {
 		view.showWinner(winner.getName());	
 	}
 	private void rebuildDeck() {
-		for(Player player:players) {
+		for(IPlayer player:players) {
 			deck.returnCardToDeck(player.returnCard());
 		}
 		

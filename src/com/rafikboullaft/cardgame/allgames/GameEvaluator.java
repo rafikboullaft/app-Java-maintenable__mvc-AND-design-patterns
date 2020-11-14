@@ -2,8 +2,8 @@ package com.rafikboullaft.cardgame.allgames;
 
 import java.util.ArrayList;
 
-import com.rafikboullaft.cardgame.model.Player;
+import com.rafikboullaft.cardgame.model.IPlayer;
 
 public interface GameEvaluator {
-	public Player evaluateWinner(ArrayList<Player> players);	
+	public IPlayer evaluateWinner(ArrayList<IPlayer> players);	
 }

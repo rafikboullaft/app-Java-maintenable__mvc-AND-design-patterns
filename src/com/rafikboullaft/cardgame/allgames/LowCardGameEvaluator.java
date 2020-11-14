@@ -2,17 +2,17 @@ package com.rafikboullaft.cardgame.allgames;
 
 import java.util.ArrayList;
 
-import com.rafikboullaft.cardgame.model.Player;
+import com.rafikboullaft.cardgame.model.IPlayer;
 import com.rafikboullaft.cardgame.model.PlayingCard;
 
 public class LowCardGameEvaluator implements GameEvaluator{
 
-	public Player evaluateWinner(ArrayList<Player> players) {
-		Player bestPlayer=null;
+	public IPlayer evaluateWinner(ArrayList<IPlayer> players) {
+		IPlayer bestPlayer=null;
 		int bestRank = -1;
 		int bestSuit = -1;
 		
-		for(Player player:players) {
+		for(IPlayer player:players) {
 			boolean newBestPlayer=false;
 			if(bestPlayer==null) {
 				newBestPlayer=true;

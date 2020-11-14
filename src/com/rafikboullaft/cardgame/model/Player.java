@@ -1,6 +1,7 @@
 package com.rafikboullaft.cardgame.model;
 
-public class Player {
+public class Player implements IPlayer{
+
 	String name;
 	Hand hand;
 	public Player(String name) {
@@ -21,5 +22,4 @@ public class Player {
 		return name;
 	}
 	
-
 }

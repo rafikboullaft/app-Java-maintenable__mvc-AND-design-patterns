@@ -6,9 +6,7 @@ import com.rafikboullaft.cardgame.allgames.GameEvaluator;
 import com.rafikboullaft.cardgame.model.Deck;
 import com.rafikboullaft.cardgame.model.Player;
 import com.rafikboullaft.cardgame.model.PlayingCard;
-import com.rafikboullaft.cardgame.model.Rank;
-import com.rafikboullaft.cardgame.model.suit;
-import com.rafikboullaft.cardgame.view.View;
+import com.rafikboullaft.cardgame.view.GameView;
 
 
 public class GameController {
@@ -19,15 +17,15 @@ public class GameController {
 		
 	}
 	Deck deck;
-	View view;
+	GameView view;
 	ArrayList<Player> players;
 	Player winner;
 	GameState gameState;
 	GameEvaluator gameEvaluator;
-	public GameController(Deck deck, View view,GameEvaluator gameEvaluator) {
+	public GameController(Deck deck, GameView view,GameEvaluator gameEvaluator) {
 		super();
 		this.deck = deck;
-		this.view = view;
+		this.view =view;
 		players = new ArrayList<Player>();
 		view.setController(this);
 		this.gameState= GameState.AddingPlayers;
@@ -67,6 +65,10 @@ public class GameController {
 			gameState=GameState.CardsDealt;
 			
 		}
+	}
+	public void restartGame() {
+		rebuildDeck();
+		gameState=GameState.AddingPlayers;
 	}
 	public void flipCards() {
 		int playerIndex=1;

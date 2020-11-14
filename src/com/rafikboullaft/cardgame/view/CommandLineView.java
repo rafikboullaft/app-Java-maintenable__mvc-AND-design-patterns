@@ -6,7 +6,7 @@ import com.rafikboullaft.cardgame.controller.GameController;
 import com.rafikboullaft.cardgame.model.Rank;
 import com.rafikboullaft.cardgame.model.suit;
 
-public class View {
+public class CommandLineView implements GameView{
 	GameController controller;
 	Scanner keyboard = new Scanner(System.in);
 	
